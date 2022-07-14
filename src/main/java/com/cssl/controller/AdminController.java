@@ -10,17 +10,11 @@ import com.cssl.service.OptionService;
 import com.cssl.service.StatisticsService;
 import com.cssl.service.TicketService;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.Collection;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import javax.websocket.server.PathParam;
 
 @Controller
 public class AdminController {
