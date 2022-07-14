@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<HTML xmlns:th="http://www.thymeleaf.org">
+<HEAD>
+    <META content="IE=11.0000"
+          http-equiv="X-UA-Compatible">
+    <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <TITLE>参与投票</TITLE>
+    <LINK href="static/css/style.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="static/js/jquery-1.8.3.min.js"></script>
+    <META name="GENERATOR" content="MSHTML 11.00.10586.420">
+</HEAD>
+<BODY>
+<DIV class="wrap" id="header"><IMG src="static/images/logo.gif"></DIV>
+<DIV class="wrap" id="navbar">
+    <DIV class="profile">您好，<span th:text="${session.userwjj?.u_name}"></span> <SPAN class="return"><A
+            href="voteList">返回列表</A></SPAN>
+        <SPAN class="addnew"><A href="addVote">添加新投票</A></SPAN>
+        <SPAN class="modify"><A href="weihuVote">维护</A></SPAN>
+        <SPAN class="return"><A
+                href="userZX">注销</A></SPAN></DIV>
+    <DIV class="search">
+        <FORM action="Subject-search.action" method="post"><INPUT name="keywords" class="input-text" type="text"><INPUT
+                name="submit" class="input-button" type="submit" value=""/>
+        </FORM>
+    </DIV>
+</DIV>
+<DIV class="wrap" id="vote">
+    <H2>参与投票</H2>
+    <UL class="list" th:each="Ticket,start:${vote.records}">
+        <LI>
+            <H4 th:text="${Ticket.t_title}"></H4>
+            <P class="info">共有 <span th:text="${Ticket.xXCount}"></span> 个选项，已有 <span
+                    th:text="${Ticket.userCount}"></span> 个投票。</P>
+            <FORM action="voteTp" method="post" >
+                <!--INPUT name="struts.token.name" type="hidden" value="token">
+                <INPUT name="token" type="hidden" value="4UDEDKPAXYKC1PTLWA2OMZGQ925VSGDB">-->
+                <INPUT name="uid" id="uid" type="hidden" th:value="${session.userwjj?.u_id}">
+                <INPUT name="tid" id="tid" type="hidden" th:value="${Ticket.t_id}">
+                <INPUT name="ttype" id="ttype" type="hidden" th:value="${Ticket.t_type}">
+                <OL th:each="ops,start:${Ticket.optionList}">
+                    <LI th:if="${Ticket.t_type==1}"><span th:text="${ops.o_px}"></span><INPUT name="options" id="options"
+                                                                                              type="radio"
+                                                                                              th:value="${ops.o_id}"
+                                                                                              th:text="${ops.o_name}">
+                    </LI>
+                    <LI th:if="${Ticket.t_type==2}"><span th:text="${ops.o_px}"></span><INPUT name="options"
+                                                                                              type="checkbox"
+                                                                                              th:value="${ops.o_id}"
+                                                                                              th:text="${ops.o_name}">
+                    </LI>
+                </OL>
+                <P class="voteView"><INPUT type="image" src="static/images/button_vote.gif"/><A
+                        th:href="@{'findVoteByid'(tid=${Ticket.t_id})}"><IMG
+                        src="static/images/button_view.gif"/></A></P></FORM>
+        </LI>
+    </UL>
+</DIV>
+<DIV class="wrap" id="footer"> 北大青鸟 © 版权所有</DIV>
+</BODY>
+</HTML>

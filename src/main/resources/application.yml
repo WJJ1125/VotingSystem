@@ -1,0 +1,40 @@
+spring:
+  thymeleaf:
+    encoding: UTF-8
+    cache: false
+  mvc:
+    static-path-pattern: /static/**
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql:///bdqn?serverTimezone=GMT&characterEncoding=utf-8&allowMultiQueries=true
+    username: root
+    password: root
+
+  redis:
+    password: 123456
+    timeout: 10s  # 数据库连接超时时间，2.x中该参数的类型为Duration，在配置的时候需要指明单位
+    # 连接池配置，2.x中直接使用jedis或者lettuce配置连接池
+    jedis: # 也可以使用[lettuce]
+      pool:
+        max-idle: 50        # 最大空闲连接数
+        min-idle: 10        # 最小空闲连接数
+        max-wait: -1s        # 等待可用连接的最大时间，负数为不限制
+        max-active: -1        # 最大活跃连接数，负数为不限制
+    #哨兵(注释上面host、port，注意缩进，错了不报错默认连接localhost:6379)
+    sentinel:
+      master: mymaster
+      #只配哨兵不需要配主从服务器地址
+      nodes: 192.168.29.132:26379
+mybatis-plus:
+  type-aliases-package: com.cssl.pojo
+  mapper-locations: classpath:/mapper/*.xml
+  configuration:
+    auto-mapping-behavior: full
+    use-generated-keys: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: false   #默认true开启驼峰命名
+  global-config:
+    db-config:
+      id-type: auto              #主键自增
+      table-underline: false  #默认true开启驼峰命名
+      table-prefix: tbl_      #表名前缀

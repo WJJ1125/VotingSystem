@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<HTML lang="en">
+<HEAD>
+    <META content="IE=11.0000"
+          http-equiv="X-UA-Compatible">
+    <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <TITLE>注册</TITLE>
+    <LINK href="static/css/style.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="static/js/jquery-1.8.3.min.js"></script>
+    <META name="GENERATOR" content="MSHTML 11.00.10586.420">
+    <script type="text/javascript">
+        function findUser(name) {
+            if (name == "") {
+                document.getElementById("mz").innerText = "X 用户名不能为空";
+            } else {
+                $.ajax({
+                    url: '/user/findUser',
+                    type: 'get',
+                    async: false,
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    data: {"uname": name},
+                    success: function (data) {
+                        if (data == "1") {
+                            document.getElementById("mz").innerText = "X 该用户名已被使用";
+                        } else {
+                            document.getElementById("mz").innerText = "√";
+                        }
+                    }
+                })
+            }
+        }
+        function pone(){
+            var p1=document.getElementById("password").value;
+            if(p1==""){
+                document.getElementById("mm").innerText = "X 密码不能为空";
+            }else {
+                document.getElementById("mm").innerText = "√";
+            }
+        }
+        function ptwo(){
+            var p1=document.getElementById("password").value;
+            var p2=document.getElementById("repass").value;
+            if(p2==""){
+                document.getElementById("mm2").innerText = "X 密码不能为空";
+            }else if(p1!=p2){
+                document.getElementById("mm2").innerText = "X 两次密码输入不匹配";
+            }else {
+                document.getElementById("mm2").innerText = "√";
+            }
+        }
+        function check() {
+            pone();
+            ptwo();
+            var mz= document.getElementById("mz").innerText;
+            var p1=document.getElementById("mm").innerText;
+            var p2=document.getElementById("mm2").innerText;
+            if (mz=="X 该用户名已被使用"||mz=="X 用户名不能为空"||p1=="X 密码不能为空"||p2=="X 两次密码输入不匹配"||p2=="X 密码不能为空"){
+                alert("表单内容错误，请重新修改确认在提交");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</HEAD>
+<BODY>
+<DIV class="wrap" id="header"><IMG src="static/images/logo.gif"></DIV>
+<DIV class="wrap" id="navbar">
+    <DIV class="search"><!--
+		<form method="get" action="index.html">
+			<input type="text" name="keywords" class="input-text" /><input type="submit" name="submit" class="input-button" value="" />
+		</form>
+	-->
+    </DIV>
+</DIV>
+<DIV class="box" id="register">
+    <H2>新用户注册</H2>
+    <DIV class="content">
+        <FORM action="user/regist" onsubmit="return check()" method="post">
+            <DL>
+                <DT>用户名：</DT>
+                <DD id="xx"><INPUT name="u_name" class="input-text" id="userName" onblur="findUser(this.value)"
+                                   type="text"/><span id='mz'>请输入用户名</span></DD>
+                <DT>密码：</DT>
+                <DD><INPUT name="u_password" class="input-text" id="password" onblur="pone()" type="text"/><span
+                        id="mm">请输入密码</span></DD>
+                <DT>确认密码：</DT>
+                <DD><input name="userVo.confirmPassword" class="input-text" id="repass" onblur="ptwo()" type="text"/><span id="mm2">请再次输入密码</span>
+                </DD>
+                <DT></DT>
+                <DD><INPUT name="submit" class="input-button" type="submit" /></DD>
+            </DL>
+        </FORM>
+        <DIV class="error"></DIV>
+        <DIV class="error"></DIV>
+    </DIV>
+</DIV>
+<DIV class="wrap" id="footer">北大青鸟 © 版权所有</DIV>
+</BODY>
+</HTML>

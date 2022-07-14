@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<HTML xmlns:th="http://www.thymeleaf.org">
+<HEAD>
+    <META content="IE=11.0000"
+          http-equiv="X-UA-Compatible">
+    <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <TITLE>投票列表</TITLE>
+    <LINK href="static/css/style.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="static/js/jquery-1.8.3.min.js"></script>
+    <META name="GENERATOR" content="MSHTML 11.00.10586.420">
+    <script type="text/javascript">
+        function del(i){
+            var g=confirm("确定删除吗？");
+            if(g){
+                var idd =i.next().val();
+                var tr = i.parent().parent().parent();
+                $.ajax({
+                    type : 'post',
+                    url : 'delVote',
+                    data:{"idd":idd},
+                    success : function(r) {
+                        if(r==1){
+                            alert("删除成功");
+                            tr.remove();//移除所在的行
+                        }else{
+                            alert("删除失败");
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+</HEAD>
+<BODY>
+<DIV class="wrap" id="header"><IMG src="static/images/logo.gif"></DIV>
+<DIV class="wrap" id="navbar">
+    <DIV class="profile">您好，<span th:text="${session.userwjj?.u_name}"></span><SPAN class="return"><A
+            href="voteList">返回列表</A></SPAN>
+        <SPAN class="addnew"><A href="addVote">添加新投票</A></SPAN>
+        <SPAN class="modify"><A href="weihuVote">维护</A></SPAN>
+        <SPAN class="return"><A
+                href="userZX">注销</A></SPAN></DIV>
+    <DIV class="search">
+        <FORM action="votelist" method="post"><INPUT name="keywords" class="input-text" type="text"><INPUT
+                name="submit" class="input-button" type="submit" value=""/>
+        </FORM>
+    </DIV>
+</DIV>
+<DIV class="wrap" id="vote">
+    <H2>投票列表</H2>
+    <DIV style="float: right;"><A href="votelist?pageindex=1">首页</A>
+        | <a href="votelist_sha">上一页</a> | <a href="votelist_xia">下一页</a> | <A
+                th:href="@{'votelist'(pageindex=${session.page})}">末页</A>
+    </DIV>
+    <BR>
+    <UL class="list" th:each="Ticket,start:${tickList.records}">
+        <LI th:class="${start.odd}?'odd'">
+            <H4>
+                <em th:if="${pd==2}">
+                    <a th:href="@{'weihuByid'(tid=${Ticket.t_id})}">维护</a>
+                    <a href="#" onclick="del($(this))">删除</a>
+                    <input type="hidden" th:value="${Ticket.t_id}"/>
+                </em>
+                <A th:href="@{'findVoteByid'(tid=${Ticket.t_id})}" th:text="${Ticket.t_title}"></A>
+            </H4>
+            <DIV class="join" th:if="${pd==1}" ><A th:href="@{'voteview'(tid=${Ticket.t_id})}">我要参与</A></DIV>
+            <P class="info">共有 <span th:text="${Ticket.xXCount}"></span> 个选项，已有 <span
+                    th:text="${Ticket.userCount}"></span> 个投票。</P>
+        </LI>
+    </UL>
+    <DIV style="float: right;"><A href="votelist?pageindex=1">首页</A>
+        | <a href="votelist_sha">上一页</a> | <a href="votelist_xia">下一页</a> | <A
+                th:href="@{'votelist'(pageindex=${session.page})}">末页</A>
+    </DIV>
+</DIV>
+<DIV class="wrap" id="footer"> 北大青鸟 © 版权所有</DIV>
+</BODY>
+</HTML>

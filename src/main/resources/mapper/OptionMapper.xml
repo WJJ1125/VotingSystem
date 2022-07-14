@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cssl.mapper.OptionMapper">
+
+    <resultMap id="BaseResultMap" type="com.cssl.pojo.Option">
+            <id property="o_id" column="o_id" jdbcType="INTEGER"/>
+            <result property="o_name" column="o_name" jdbcType="VARCHAR"/>
+            <result property="t_id" column="t_id" jdbcType="INTEGER"/>
+            <result property="o_px" column="o_px" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        o_id,o_name,t_id,o_px
+    </sql>
+
+    <insert id="addd" parameterType="com.cssl.pojo.Option">
+        INSERT INTO `bdqn`.`option` ( `o_name`, `t_id`, `o_px`)VALUES(#{o_name}, ${t_id}, ${o_px});
+    </insert>
+    <update id="update">
+        UPDATE `bdqn`.`option` SET `o_name` = #{o_name} , `t_id` = #{t_id} , `o_px` = #{o_px} WHERE `o_id` = ${o_id} ;
+    </update>
+    <delete id="delOption">
+        delete  from `option` ${ew.customSqlSegment}
+    </delete>
+</mapper>

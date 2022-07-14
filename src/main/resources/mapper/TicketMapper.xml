@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cssl.mapper.TicketMapper">
+
+    <resultMap id="BaseResultMap" type="com.cssl.pojo.Ticket">
+        <id property="t_id" column="t_id" jdbcType="INTEGER"/>
+        <result property="t_title" column="t_title" jdbcType="VARCHAR"/>
+        <result property="t_type" column="t_type" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        t_id
+        ,t_title,t_type
+    </sql>
+    <delete id="delVote" >
+        delete  from ticket ${ew.customSqlSegment}
+    </delete>
+    <resultMap id="map1" type="com.cssl.pojo.Ticket">
+        <id column="t_id" property="t_id"></id>
+        <collection property="optionList" select="wjj" column="t_id=t_id"/>
+    </resultMap>
+    <resultMap id="map2" type="com.cssl.pojo.Option">
+        <result column="t_id" property="t_id"></result>
+    </resultMap>
+    <select id="wjj" resultMap="map2">
+        SELECT *, (SELECT COUNT(0) FROM statistics WHERE o_id=o.o_id )AS piaoCount,((SELECT COUNT(0) FROM statistics WHERE o_id=o.o_id )/(SELECT COUNT(0) FROM statistics WHERE t_id=o.t_id)*100) AS Proportion FROM `option` o  where t_id=#{t_id}
+    </select>
+    <select id="findTicks" resultMap="map1">
+        SELECT t.*,
+               (SELECT COUNT(1) FROM `option` WHERE t_id = t.t_id) AS xXCount,
+               (SELECT COUNT(0)
+                FROM statistics
+                WHERE s_id IN (SELECT MAX(s_id) FROM statistics WHERE t_id = t.t_id GROUP BY u_id)) as userCount
+        FROM ticket t ${ew.customSqlSegment}
+    </select>
+</mapper>

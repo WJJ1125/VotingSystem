@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cssl.mapper.StatisticsMapper">
+
+    <resultMap id="BaseResultMap" type="com.cssl.pojo.Statistics">
+            <id property="s_id" column="s_id" jdbcType="INTEGER"/>
+            <result property="u_id" column="u_id" jdbcType="INTEGER"/>
+            <result property="o_id" column="o_id" jdbcType="INTEGER"/>
+            <result property="t_id" column="t_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        s_id,u_id,o_id,
+        t_id
+    </sql>
+    <delete id="delSta">
+        delete  from statistics ${ew.customSqlSegment}
+    </delete>
+    <select id="findCount" resultType="java.lang.Integer">
+        SELECT COUNT(0) FROM statistics WHERE u_id=#{uid} AND t_id=#{tid}
+    </select>
+</mapper>

@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<HTML lang="en">
+<HEAD>
+    <META content="IE=11.0000"
+          http-equiv="X-UA-Compatible">
+    <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <TITLE>登录</TITLE>
+    <LINK href="static/css/style.css" rel="stylesheet"
+          type="text/css">
+    <script type="text/javascript" src="static/js/jquery-1.8.3.min.js"></script>
+    <META name="GENERATOR" content="MSHTML 11.00.10586.420">
+    <script type="text/javascript">
+        function yz(){
+            var name=document.getElementById("name").value;
+            var pwd=document.getElementById("password").value;
+            if(name==""||pwd==""){
+                alert("用户名或者密码不能为空");
+                return false;
+            }else {
+                return true;
+            }
+        }
+    </script>
+</HEAD>
+<BODY>
+<DIV class="wrap" id="header"><IMG src="static/images/logo.gif"></DIV>
+<DIV class="wrap" id="login">
+    <DIV class="main">
+        <DIV class="corner"></DIV>
+        <DIV class="introduce">
+            <H2>北大青鸟</H2>
+            <P>网上调查系统...</P></DIV>
+        <DIV class="login">
+            <H2>用户登录</H2>
+            <FORM action="user/login/ex" method="post" onsubmit="return yz()">
+                <DL id="loginBox">
+                    <DT>用户名：</DT>
+                    <DD><INPUT name="u_name" id="name" class="input-text" type="text"></DD>
+                    <DT>密　码：</DT>
+                    <DD><INPUT name="u_password" id="password" class="input-text" type="password"></DD>
+                    <DT></DT>
+                    <DD><INPUT name="submit" class="input-button" type="submit" value="登录"> <A
+                            href="regist">新用户注册</A></DD>
+                </DL>
+            </FORM>
+            <DIV class="error"></DIV>
+        </DIV>
+    </DIV>
+</DIV>
+<DIV class="wrap"></DIV>
+<DIV class="wrap" id="footer"> 北大青鸟 © 版权所有</DIV>
+</BODY>
+</HTML>
