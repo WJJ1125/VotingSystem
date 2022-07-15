@@ -34,7 +34,9 @@ public class User implements Serializable {
      * 
      */
     private Integer u_type;
-
+    /*
+    * 实体类注释
+    * */
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }
