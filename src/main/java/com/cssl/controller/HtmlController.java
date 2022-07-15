@@ -11,7 +11,8 @@ public class HtmlController {
     * */
     @GetMapping("login")
     public String login(){
-        System.out.println("进入登录页面");
+        System.out.println("版本冲突测试第一次");
+        System.out.println("进入登录面");
         return "login";
     }
     /*
