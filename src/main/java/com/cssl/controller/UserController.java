@@ -27,6 +27,7 @@ public class UserController {
 
     @PostMapping("user/login/ex")
     public String login(HttpSession session, User user, HttpServletResponse response, HttpServletRequest request) throws IOException {
+        //版本冲突测试第一次 
         QueryWrapper<User> o = new QueryWrapper<>();
         Map<String, String> map = new HashMap<>();
         map.put("u_name", user.getU_name());
