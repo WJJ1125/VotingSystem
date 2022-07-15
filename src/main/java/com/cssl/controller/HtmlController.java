@@ -11,6 +11,7 @@ public class HtmlController {
     * */
     @GetMapping("login")
     public String login(){
+        System.out.println("进入登录页面");
         return "login";
     }
     /*
